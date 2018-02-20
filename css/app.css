@@ -1,0 +1,36 @@
+html,body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    height: 100%;
+    counter-reset: num-fieldset;
+}
+#app {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    flex-direction: column;
+}
+#app > *:first-child {
+    width: 100%;
+}
+#app > *:not(:first-child) {
+    flex: 1;
+}
+fieldset {
+    margin: 1.5em;
+    padding: 1.5em 2em;
+}
+fieldset > legend {
+    color: chocolate;
+}
+fieldset > legend::before {
+    counter-increment: num-fieldset;
+    content: counter(num-fieldset) " - ";
+    font-weight: bold;
+}
+fieldset input {
+    width: calc(100% - 1.5em);
+    padding: 0.8em 0.5em;
+    margin : 0.1em 0;
+}

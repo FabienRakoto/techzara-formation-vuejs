@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue.js</title>
+    <link href="css/app.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div id="app">
+
+        <h3 v-bind:title="title">{{ title }}</h3>
+
+        <fieldset>
+            <legend>Timer</legend>
+            <button v-on:click="startCounter">
+                Start counter
+            </button>
+            <button v-on:click="stopCounter">
+                reset counter
+            </button>
+            <p>{{ counter }}</p>
+        </fieldset>
+
+        <fieldset>
+            <legend>Conditions</legend>
+            Counter is
+            <b v-if="counter % 2 !== 0">ODD</b>
+            <b v-if="counter % 2 === 0">EVEN</b>
+        </fieldset>
+
+        <fieldset>
+            <legend>Tow-way binding</legend>
+            <input v-model="userForm.nom" type="text" placeholder="Nom" />
+            <input v-model="userForm.prenom" type="text" placeholder="Prénom" />
+            <input v-model="userForm.age" type="number" placeholder="Age" />
+            <input v-model="userForm.tel" type="tel" placeholder="Tél" />
+            <input v-model="userForm.email" type="email" placeholder="Email" />
+            <input v-model="userForm.adresse" type="text" placeholder="Adresse" />
+            <button v-on:click="addMember">
+                Add Member <i>{{ userForm.nom }}</i>
+            </button>
+        </fieldset>
+
+        <fieldset>
+            <legend>Loop</legend>
+
+            <div v-for="member in members">
+                {{ member.prenom }} {{ member.nom.toUpperCase() }}
+            </div>
+        </fieldset>
+
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/4.9.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.9.1/firebase-database.js"></script>
+    <script type="application/javascript">
+        var config = {
+            apiKey: "AIzaSyC8hI-mObh6_zC4CHCsErTcfSu3msojp4o",
+            authDomain: "formation-tz.firebaseapp.com",
+            databaseURL: "https://formation-tz.firebaseio.com",
+            projectId: "formation-tz",
+            storageBucket: "",
+            messagingSenderId: "604798803445"
+        };
+        firebase.initializeApp(config);
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
