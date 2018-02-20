@@ -40,9 +40,7 @@ const app = new Vue({
 
     methods : {
         startCounter : function() {
-            this.timer = window.setInterval(() => {
-                ++this.counter;
-            }, 1000);
+            this.timer = window.setInterval(() => ++this.counter, 1000);
         },
 
         stopCounter : function() {
@@ -77,6 +75,8 @@ const app = new Vue({
 
         removeMember : function (guid) {
             this.database.ref('members/' + guid).remove();
+            // Reset form
+            this.resetUserForm();
         }
     }
 });
