@@ -91,11 +91,7 @@ const app = new Vue({
 
         //--------------------------------------------
         // Drag Droop upload
-        imgDragEnter: function (event, member, guid) {
-            member.highlighted = true;
-            return false;
-        },
-         imgDragOver: function (event, member, guid) {
+        imgDragOver: function (event, member, guid) {
             event.preventDefault();
             event.stopPropagation();
             member.highlighted = true;
@@ -107,14 +103,24 @@ const app = new Vue({
             member.highlighted = false;
             return false;
         },
+        imgChoose: function(guid) {
+            document.querySelector('input[guid="'+ guid +'"]').click();
+        },
+        imgUpload: function (event, member, guid) {
+            const f = event.target.files[0];
+            this.uploadFile(f, member, guid);
+            return false;
+        },
         imgDrop: function (event, member, guid) {
             event.preventDefault();
             event.stopPropagation();
             member.highlighted = false;
             if(! event.dataTransfer.files.length) return false;
-
-            // Upload file
             const f = event.dataTransfer.files[0];
+            this.uploadFile(f, member, guid);
+            return false;
+        },
+        uploadFile: function(f, member, guid) {
             // Only process image files.
             if (!f.type.match('image/jpeg') && !f.type.match('image/png')) {
                 alert('The file must be an image');
@@ -126,18 +132,25 @@ const app = new Vue({
                     alert('Image too large, size must be less than 150kB');
                     return false;
                 }
-                this.storage.child('avatar/' + guid).put(evt.target.result, {
+                const task = this.storage.child('avatar/' + guid).put(evt.target.result, {
                     contentType: f.type,
-                }).then(snapshot => {
-                    if(snapshot.downloadURL) {
-                        member.avatar = snapshot.downloadURL;
+                });
+                member.highlighted = true;
+                task.on('state_changed', snapshot => {
+
+                }, err => {
+                    member.highlighted = false;
+                    console.error(err);
+                }, () => {
+                    member.highlighted = false;
+                    if(task.snapshot.downloadURL) {
+                        member.avatar = task.snapshot.downloadURL;
                         // Save member
                         this.database.ref('members/' + guid).set(member);
                     }
                 });
             });
             reader.readAsArrayBuffer(f);
-            return false;
         }
     }
 });

@@ -50,7 +50,7 @@
             <legend>Loop</legend>
             <section class="members-list">
                 <article v-for="(member, guid) in members"
-                         v-on:dragenter="imgDragEnter($event, member, guid)"
+                         v-on:dragenter="imgDragOver($event, member, guid)"
                          v-on:dragover="imgDragOver($event, member, guid)"
                          v-on:dragleave="imgDragLeave($event, member, guid)"
                          v-on:drop="imgDrop($event, member, guid)"
@@ -58,7 +58,14 @@
                 >
                     <span class="icon close" v-on:click="removeMember(guid)"></span>
                     <span class="icon edit" v-on:click="editMember(guid, member)"></span>
-                    <img v-bind:src="member.avatar" />
+                    <img v-bind:src="member.avatar"
+                         v-on:click="imgChoose(guid)"
+                    />
+                    <input type="file"
+                           style="display: none;visibility: hidden;"
+                           v-bind:guid="guid"
+                           v-on:change="imgUpload($event, member, guid)"
+                    />
                     <h4>
                         <b>{{ member.prenom }} {{ member.nom.toUpperCase() }}</b>
                     </h4>
