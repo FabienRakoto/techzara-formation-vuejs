@@ -36,7 +36,7 @@
             <input v-model="userForm.tel" type="tel" placeholder="Tél" />
             <input v-model="userForm.email" type="email" placeholder="Email" />
             <input v-model="userForm.adresse" type="text" placeholder="Adresse" />
-            <button v-on:click="addMember" style="font-size:150%;">
+            <button v-on:click="addMember">
                 <b v-if="userForm.guid">
                     Edit Member <i>{{ userForm.nom }}</i>
                 </b>
