@@ -67,7 +67,7 @@
                            v-on:change="imgUpload($event, member, guid)"
                     />
                     <h4>
-                        <b>{{ member.prenom }} {{ member.nom.toUpperCase() }}</b>
+                        <b>{{ member.prenom }} {{ member.nom }}</b>
                     </h4>
                     <span v-if="member.birth">{{ new Date().getFullYear() - new Date(member.birth).getFullYear() }} ans</span>
                     <div>
