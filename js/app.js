@@ -134,7 +134,7 @@ const app = new Vue({
             const reader = new FileReader();
             reader.addEventListener('loadend', evt => {
                 if(evt.target.result.byteLength > 1048576) {
-                    alert('Image too large, size must be less than 150kB');
+                    alert('Image too large, size must be less than 1MB');
                     return false;
                 }
                 const task = this.storage.child('avatar/' + guid).put(evt.target.result, {
