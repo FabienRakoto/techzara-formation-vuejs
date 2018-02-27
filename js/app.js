@@ -21,7 +21,8 @@ const app = new Vue({
             adresse : '',
             avatar : 'https://www.w3schools.com/w3css/img_avatar3.png',
             highlighted : false
-        }
+        },
+        online : navigator.onLine
     },
 
     created : function() {
@@ -39,6 +40,10 @@ const app = new Vue({
 
         // Listeners to /members
         this.database.ref('members').on('value', snapshot => this.members = snapshot.val());
+
+        // Listeners to offlin/online
+        window.addEventListener('offline', e => this.online = false);
+        window.addEventListener('online', e => this.online = true);
     },
 
     methods : {

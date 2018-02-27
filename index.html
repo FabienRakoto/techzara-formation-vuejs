@@ -9,10 +9,9 @@
     <link href="css/app.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
+
     <section id="app">
-
         <h3 v-bind:title="title">{{ title }}</h3>
-
         <fieldset>
             <legend>Binding & conditions</legend>
             <button v-on:click="startCounter">
@@ -58,14 +57,14 @@
                 >
                     <span class="icon close" v-on:click="removeMember(guid)"></span>
                     <span class="icon edit" v-on:click="editMember(guid, member)"></span>
-                    <img v-bind:src="member.avatar"
-                         v-on:click="imgChoose(guid)"
-                    />
-                    <input type="file"
-                           style="display: none;visibility: hidden;"
-                           v-bind:guid="guid"
-                           v-on:change="imgUpload($event, member, guid)"
-                    />
+                    <div class="img-container" v-on:click="imgChoose(guid)">
+                        <img v-bind:src="member.avatar" />
+                        <input type="file"
+                               style="display: none;visibility: hidden;"
+                               v-bind:guid="guid"
+                               v-on:change="imgUpload($event, member, guid)"
+                        />
+                    </div>
                     <h4>
                         <b>{{ member.prenom }} {{ member.nom }}</b>
                     </h4>
@@ -79,7 +78,9 @@
                 </article>
             </section>
         </fieldset>
-
+        <div class="offline-message" v-if="!online">
+            ⚠️ You lost internet connection !
+        </div>
     </section>
 
     <script src="https://www.gstatic.com/firebasejs/4.9.1/firebase-app.js"></script>
