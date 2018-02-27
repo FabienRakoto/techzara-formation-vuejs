@@ -72,7 +72,14 @@ const app = new Vue({
         },
 
         addMember: function () {
-            if (this.userForm.nom === '') return;
+            if (this.userForm.nom === '') {
+                try {
+                    navigator.vibrate([400, 200, 400]);
+                }catch (e) {
+                    console.error('Navigator.vibrate not supported');
+                }
+                return;
+            }
             this.database.ref('members/' + (this.userForm.guid ? this.userForm.guid : String.guid())).set(this.userForm);
             // Reset form
             this.resetUserForm();
