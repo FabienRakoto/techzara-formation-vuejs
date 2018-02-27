@@ -133,7 +133,7 @@ const app = new Vue({
             }
             const reader = new FileReader();
             reader.addEventListener('loadend', evt => {
-                if(evt.target.result.byteLength > 150000) {
+                if(evt.target.result.byteLength > 1048576) {
                     alert('Image too large, size must be less than 150kB');
                     return false;
                 }
