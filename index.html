@@ -6,9 +6,9 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Vue.js</title>
-    <link href="css/app.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
+
     <section id="app">
         <h3 v-bind:title="title">{{ title }}</h3>
         <fieldset>
@@ -56,14 +56,14 @@
                 >
                     <span class="icon close" v-on:click="removeMember(guid)"></span>
                     <span class="icon edit" v-on:click="editMember(guid, member)"></span>
-                    <img v-bind:src="member.avatar"
-                         v-on:click="imgChoose(guid)"
-                    />
-                    <input type="file"
-                           style="display: none;visibility: hidden;"
-                           v-bind:guid="guid"
-                           v-on:change="imgUpload($event, member, guid)"
-                    />
+                    <div class="img-container" v-on:click="imgChoose(guid)">
+                        <img v-bind:src="member.avatar" />
+                        <input type="file"
+                               style="display: none;visibility: hidden;"
+                               v-bind:guid="guid"
+                               v-on:change="imgUpload($event, member, guid)"
+                        />
+                    </div>
                     <h4>
                         <b>{{ member.prenom }} {{ member.nom }}</b>
                     </h4>
@@ -77,13 +77,16 @@
                 </article>
             </section>
         </fieldset>
-
+        <div class="offline-message" v-if="!online">
+            ⚠️ You lost internet connection !
+        </div>
     </section>
 
     <script src="https://www.gstatic.com/firebasejs/4.9.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/4.9.1/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/4.9.1/firebase-storage.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-    <script src="js/app.js"></script>
+    <script src="js/app.js?v0.0.1"></script>
+    <link href="css/app.css?v0.0.1" rel="stylesheet" type="text/css" />
 </body>
 </html>

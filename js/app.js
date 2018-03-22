@@ -21,7 +21,8 @@ const app = new Vue({
             adresse : '',
             avatar : 'https://www.w3schools.com/w3css/img_avatar3.png',
             highlighted : false
-        }
+        },
+        online : navigator.onLine
     },
 
     created : function() {
@@ -39,6 +40,10 @@ const app = new Vue({
 
         // Listeners to /members
         this.database.ref('members').on('value', snapshot => this.members = snapshot.val());
+
+        // Listeners to offlin/online
+        window.addEventListener('offline', e => this.online = false);
+        window.addEventListener('online', e => this.online = true);
     },
 
     methods : {
@@ -67,7 +72,14 @@ const app = new Vue({
         },
 
         addMember: function () {
-            if (this.userForm.nom === '') return;
+            if (this.userForm.nom === '') {
+                try {
+                    navigator.vibrate([400, 200, 400]);
+                }catch (e) {
+                    console.error('Navigator.vibrate not supported');
+                }
+                return;
+            }
             this.database.ref('members/' + (this.userForm.guid ? this.userForm.guid : String.guid())).set(this.userForm);
             // Reset form
             this.resetUserForm();
@@ -128,8 +140,8 @@ const app = new Vue({
             }
             const reader = new FileReader();
             reader.addEventListener('loadend', evt => {
-                if(evt.target.result.byteLength > 150000) {
-                    alert('Image too large, size must be less than 150kB');
+                if(evt.target.result.byteLength > 1048576) {
+                    alert('Image too large, size must be less than 1MB');
                     return false;
                 }
                 const task = this.storage.child('avatar/' + guid).put(evt.target.result, {
